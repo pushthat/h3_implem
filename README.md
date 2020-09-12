@@ -17,18 +17,23 @@ https://eng.uber.com/h3/
 
 Une API graphql (https://github.com/async-graphql/async-graphql)
 
-
 ## Status
 
 - [x] indexing system (h3)
 - [x] query system
 - [x] insert system
-- [ ] grpc api
+- [x] grpc api
 - [ ] graphql
+
+## Infos
+
+You can modify resolution layer in the ResolutionDetails enum
+
+./test-grpc.sh contain example call
 
 ## example :
 
-This is the best reprentation I could make but this does not really reflect the polygon stored  has there's a lot of line between each
+This is the best reprentation I could make but this does not really reflect the polygon stored has there's a lot of line between each
 
 Zone to cover :
 

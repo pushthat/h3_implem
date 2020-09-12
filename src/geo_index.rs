@@ -18,6 +18,7 @@ pub trait GeoIndex {
     fn get_zone_from_pos(&mut self, geolocations: GeoCoord) -> Option<String>;
 }
 
+#[derive(Debug, Default)]
 pub struct InMemoryIndexStorage {
     map_store: HashMap<H3Index, String>,
 }
@@ -109,9 +110,9 @@ fn add_h3_vec_to_map(mut map: HashMap<H3Index, bool>, h3_vec: &Vec<u64>) -> Hash
 
 // resolution details level
 enum ResolutionDetails {
-    BigResolution = 5,
+    BigResolution = 3,
     MediumResolution = 6,
-    SmallResolution = 7,
+    SmallResolution = 10,
 }
 
 impl GeoIndex for InMemoryIndexStorage {
@@ -205,7 +206,7 @@ impl GeoIndex for InMemoryIndexStorage {
         } else if res > ResolutionDetails::SmallResolution as u8 {
             return self.insert_from_smaller_res_zones(h3_index, zone_name);
         } else {
-            self.map_store.insert(h3_index, zone_name.clone());   
+            self.map_store.insert(h3_index, zone_name.clone());
         }
 
         return true;
@@ -230,6 +231,7 @@ impl GeoIndex for InMemoryIndexStorage {
 
     fn get_zone_from_pos(&mut self, geolocations: GeoCoord) -> Option<String> {
         let big_index = geo_to_h3(&geolocations, ResolutionDetails::BigResolution as u8).unwrap();
+
         if self.map_store.contains_key(&big_index) {
             let return_val = self.map_store.get(&big_index).unwrap();
             return Some(return_val.clone());
@@ -244,6 +246,7 @@ impl GeoIndex for InMemoryIndexStorage {
 
         let small_index =
             geo_to_h3(&geolocations, ResolutionDetails::SmallResolution as u8).unwrap();
+
         if self.map_store.contains_key(&small_index) {
             let return_val = self.map_store.get(&small_index).unwrap();
             return Some(return_val.clone());

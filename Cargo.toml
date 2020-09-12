@@ -10,3 +10,10 @@ edition = "2018"
 libh3 = "0.1.8"
 geo = "0.14.2"
 geo-booleanop = "0.2.1"
+tonic = "0.3.1"
+tokio = "0.2.22"
+prost = "0.6"
+
+
+[build-dependencies]
+tonic-build = "0.3"
